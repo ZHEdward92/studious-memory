@@ -14,5 +14,6 @@ services:
       bash -c "
         rabbitmq-server &
         sleep 10 &&
-        rabbitmq-plugins enable rabbitmq_stream rabbitmq_stream_management &&
+        rabbitmq-plugins enable rabbitmq_stream rabbitmq_stream_management rabbitmq_shovel rabbitmq_shovel_management &&
+        rabbitmqctl set_parameter shovel stream-to-classic '{\"src-uri\":\"amqp://\",\"src-queue\":\"hello-nodejs-stream\",\"dest-uri\":\"amqp://\",\"dest-queue\":\"classic-hello\",\"ack-mode\":\"on-confirm\"}' &&
         wait"
